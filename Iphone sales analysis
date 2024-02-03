@@ -1,0 +1,61 @@
+#Apple I-phone  Sales Analysis
+'''
+Project(Data Analytics Life Cycle)
+s1-Objective
+s2-Understanding the Data
+s3-Data Cleaning and Data Transformation
+s4-Data Enhancement
+s5-Data Analytics
+s6-Data Visualization
+'''
+import pandas as pd
+import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
+#DataSet
+"To read data from csv file hence write pd.read_csv"
+data= pd.read_csv("../input/apple-iphone-data/apple_products.csv")
+print(data.head())
+'''To analyze columns'''
+"""To Clean Data As per Life cycle"""
+'''To find missing values'''
+print(data.isnull().sum())
+'''O/P- No Missing values'''
+'''To see description of data like max,min,mean,count,20%data etc '''
+print(data.describe()) #To See  Statistical analysis
+'''O/P- Numerical data will see'''
+'''To see top 10 iphones sold in india'''
+"""To see orders in decending orders"""
+highest_rated=data.sort_values(by=["star rating"],ascending=False)
+highest_rated=highest_rated.head(10)   #To see top 10 values in decending order
+print(highest_rated['Product Name'])
+#DATA VISUALIZATION
+'''Lets have a  look at the number of ratings of the highest rated IPhone on flipkart'''
+iphones=highest_rated["Product Name"].value_counts()
+labels=iphones.index
+counts=highest_rated["Number Of Ratings"]
+figure=px.bar(highest_rated,x=labels,y=counts,title="Number of ratings of highest rated Iphones")
+print(iphones)
+"O/P:-Ratings of products will show in graphs"
+"""To See reviews with the help of graphs"""
+iphones=highest_rated["Product Name"].value_counts()
+labels=iphones.index
+counts=highest_rated["Number Of reviews"]
+figure=px.bar(highest_rated,x=labels,y=counts,title="Number of reviews of highest rated Iphones")
+figure.show()
+'''Relationship between the sale price of iPhones and their ratings on Flipkart:'''
+figure = px.scatter(data_frame = data, x="Number Of Ratings",
+                    y="Sale Price", size="Discount Percentage", 
+                    trendline="ols", 
+                    title="Relationship between Sale Price and Number of Ratings of iPhones")
+figure.show()
+'''Relationship between the discount percentage on iPhones on Flipkart and the number of ratings:¶'''
+figure = px.scatter(data_frame = data, x="Number Of Ratings",
+                    y="Discount Percentage", size="Sale Price", 
+                    trendline="ols", 
+                    title="Relationship between Discount Percentage and Number of Ratings of iPhones")
+figure.show()
+
+
+
+
